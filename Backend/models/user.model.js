@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: [6, "Password should be atleast 6 characters long"],
+        select: false,
     },
     socketId: {
         type: String,
@@ -35,7 +35,7 @@ userSchema.methods.generateAuthToken = function () {
     return jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
 };
 
-userSchema.methods.comparePasswords = async function (password) {
+userSchema.methods.comparePassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 
